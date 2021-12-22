@@ -1731,7 +1731,7 @@ reply(`${mek.quoted.caption}`)
 break
 case 'iggw':
 if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak})
-  reply('https://www.instagram.com/josephxeon13/')
+  reply('https://www.instagram.com/bpdabhilashkar5/?hl=en')
 break
    
 case 'owner':
@@ -2275,7 +2275,7 @@ sendButMessage(from, menu, ` 𝐃𝐨𝐠𝐞 𝐁𝐨𝐭`, [
 break
 case 'makermenu':
 menu = `シ︎𝘔𝘢𝘬𝘦𝘳 𝘔𝘦𝘯𝘶シ︎
-㋛${prefix}𝙨??𝙞𝙘𝙠𝙚𝙧
+㋛${prefix}𝙨??𝙞𝙘??𝙚𝙧
 
 ㋛${prefix}𝙨𝙬𝙢 <𝙖𝙪𝙩𝙝𝙤𝙧|𝙥𝙖𝙘𝙠𝙣𝙖𝙢𝙚>
 

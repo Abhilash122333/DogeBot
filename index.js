@@ -46,7 +46,6 @@ const yts = require("yt-search");
 const ms = require("parse-ms");
 const os = require('os');
 const toMs = require("ms");
-const googleImage = require('g-i-s');
 const { error } = require("qrcode-terminal");
 const {
   getBuffer,
@@ -92,11 +91,6 @@ let _registered = JSON.parse(fs.readFileSync('./database/user/registered.json'))
 let register = JSON.parse(fs.readFileSync('./database/user/registered.json'))
 const truth = JSON.parse(fs.readFileSync('./database/truth.json'))
 const dare = JSON.parse(fs.readFileSync('./database/dare.json'))
-const vien = JSON.parse(fs.readFileSync('./database/vien.json'))
-const setik = JSON.parse(fs.readFileSync('./database/setik.json'))
-const imagi = JSON.parse(fs.readFileSync('./database/imagi.json'))
-const commandsDB = JSON.parse(fs.readFileSync('./database/commands.json'))
-const { addCommands, checkCommands, deleteCommands } = require('./lib/autoresp')
 // BATAS IMAGE FOLDER //
 const iye = fs.readFileSync('./stik/thumb.jpeg')
 const asw1 = 'https://i.ibb.co/y0RYgzB/FB-IMG-1635413002830.jpg'
@@ -131,17 +125,17 @@ welcom = false;
 antical = false
 readGc = true; 
 readPc = false;
-autovn = false;
+autovn = true;
 multi = true
 harga = 0
 matauang = 'USD'
-nopref = true
+nopref = false
 numbernye = '0'
 autoketik = false;
-prefixStatus = false;
-targetpc = "916909137213"; 
-owner = "916909137213"; 
-fakeyoi = "Xeon"; 
+prefixStatus = true;
+targetpc = "918591220868"; 
+owner = "918591220868"; 
+fakeyoi = "whoiam"; 
 HunterApi = "Ikyy69", 
 xchillds = 'XChillDs' 
 hardi = 'hardianto', 
@@ -156,7 +150,7 @@ thumb = fs.readFileSync("./stik/thumb.jpeg");
 numbernye = "0"; 
 waktu = "-";
 alasan = "-"; 
-autojoin = true;
+autojoin = false;
 cmhit = []
 hit_today = [];
 //=================================================//
@@ -379,7 +373,7 @@ const checkRegisteredUser = (sender) => {
     const totalhit = JSON.parse(fs.readFileSync("./lib/totalcmd.json"))[0]
       .totalcmd;
 const daftar1 = `Hi ${pushname} ${ucapanWaktu} \n\nBefore Using the Bot Verify First `
-       const daftar2 = '```Click the button below to verify bro or type 8473\n𝐃𝐨𝐠𝐞 𝐁𝐨𝐭```'
+       const daftar2 = '```Click the button below to verify bro or type #verify\n𝐃𝐨𝐠𝐞 𝐁𝐨𝐭```'
        const daftar3 = [
           {
             buttonId: `verify`,
@@ -1227,7 +1221,7 @@ async function sendFileFromUrl(from, url, caption, msg, men) {
     //kasih wm gw ajg kalau make
     if (isGroup && isAntilink && !mek.key.fromMe) {
       if (budy.includes("://chat.whatsapp.com/")) {
-        if (isGroupAdmins) return reply("only admin");
+        if (isGroupAdmins) return reply("admin bebas");
         reply("ANTILINK DETECTED!! SORRY YOU WILL BE KICKED ;V");
         xeon.groupRemove(from, [sender]);
       }
@@ -1241,7 +1235,27 @@ async function sendFileFromUrl(from, url, caption, msg, men) {
       msg.mek[Object.keys(msg.mek)[0]].viewOnce = false;
       xeon.copyNForward(m.chat, msg);
     }
+    if (
+      isGroup &&
+      isAntihidetag &&
+      m.message[m.mtype]?.contextInfo?.mentionedJid?.length ==
+        groupMembers.length
+    ) {
+      console.log(
+        color("[ANTI-HIDETAG]", "red"),
+        color(`@${sender.split("@")[0]} send message hidetag`, "white")
+      );
+      reply(`@${sender.split("@")[0]} Detected sending hidetag messages!!`);
+      kick(from, sender);
+    }
 
+    if (isGroup && isAntivirtex && !mek.key.fromMe) {
+      if (budy.length > 700) {
+        if (isGroupAdmins) return reply("free admin");
+        reply("ANTIVIRTEX DETECTED!! SORRY YOU WILL BE KICKED ;V");
+        xeon.groupRemove(from, sender);
+      }
+    }
     if (isGroup && autojoin == true) {
       if (budy.includes("://chat.whatsapp.com/")) {
         console.log(
@@ -1263,44 +1277,7 @@ async function sendFileFromUrl(from, url, caption, msg, men) {
         xeon.groupRemove(from, [sender]);
       }
     }
-    //auto voice note by xeon
-    for (let anju of vien){
-				if (budy === anju){
-					result = fs.readFileSync(`./media/vn/${anju}.mp3`)
-					xeon.sendMessage(from, result, audio, { mimetype: 'audio/mp4', ptt: true, quoted: mek})
-					}
-			}
-			//auto sticker
-			for (let anji of setik){
-				if (budy === anji){
-					result = fs.readFileSync(`./media/sticker/${anji}.webp`)
-					xeon.sendMessage(from, result, sticker, { quoted: mek})
-					}
-			}
-			//auto image
-			for (let anjh of imagi){
-				if (budy === anjh){
-					result = fs.readFileSync(`./media/image/${anjh}.jpg`)
-					xeon.sendMessage(from, result, image, { quoted: mek})
-					}
-			}
-			// auto text 
-			for (var i = 0; i < commandsDB.length ; i++) {
-				if (budy.toLowerCase() === commandsDB[i].pesan) {
-					reply(commandsDB[i].balasan)
-				}
-			}
-			// $cat
-			    if (budy.startsWith('$')){
-      const cod = args.join(' ')
-      exec(cod, (err, stdout) => {
-      if(err) return reply(`${err}`)
-      if (stdout) {
-      reply(`${stdout}`)
-      }
-      })
-    }
-    // whatsapp profie o status san\\
+    // Runtime Di Bio Bang🌿\\
     let settingstatus = 0;
     if (new Date() * 1 - settingstatus > 1000) {
       let _uptime = process.uptime() * 1000;
@@ -1360,7 +1337,7 @@ groups = xeon.chats.array.filter(v => v.jid.endsWith('g.us'))
               latensie = speed() - timestampe
               total = math(`${groups.length}*${privat.length}`)
 if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak})
-       txtt =`Hi ${pushname} 👋\n\nIF YOU ARE USING MOD WHATSAPP & BUTTONS DOESNT SHOW, TYPE #allmenu`
+       txtt =`Hi ${pushname} 👋\n\nIF MENU DOESNT APPEAR ON CLICKING MENU BUTTON, TYPE #allmenu`
 
                buttons = [{buttonId:`allmenu`, 
                buttonText:{displayText: 'MENU🐶'},type:1},
@@ -1407,6 +1384,7 @@ if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quo
         yoii = '*'
        stst = await xeon.getStatus(`${sender.split('@')[0]}@c.us`)
 				stst = stst.status == 401 ? '' : stst.status
+			num = await fetchJson(`https://api.telnyx.com/anonymous/v2/number_lookup/${senderNumber}`, {method: 'get'})
        menu = `
 🐶 Hi @${sender.split("@")[0]}
 
@@ -1449,17 +1427,7 @@ ${readmore}
 > ⬡ ${prefix}term <code>
 > ⬡ ${prefix}eval <code>
 > ⬡ ${prefix}colongsw reply
- > ⬡ ${prefix}addvn <reply audio with name>
- > ⬡ ${prefix}delvn <audio name>
- > ⬡ ${prefix}vnlist
- > ⬡ ${prefix}addsticker <reply sticker with name>
- > ⬡ ${prefix}delsticker <sticker name>
- > ⬡ ${prefix}stickerlist
- > ⬡ ${prefix}addimage <reply image with name>
- > ⬡ ${prefix}delimage <image name>
- > ⬡ ${prefix}imagelist
-  > ⬡ ${prefix}bc
-
+ 
 
  ⬣ 𝙂𝙍𝙊𝙐𝙋 𝙁𝙀𝘼𝙏𝙐𝙍𝙀𝙎
 > ⬡ ${prefix}grup 
@@ -1478,12 +1446,10 @@ ${readmore}
 > ⬡ ${prefix}antilink on|off
 > ⬡ ${prefix}tod
 > ⬡ ${prefix}tospam amount
+> ⬡ ${prefix}antihidetag on|off
 > ⬡ ${prefix}antivirtex on|off
 > ⬡ ${prefix}autojoin on|off
 > ⬡ ${prefix}kickarea
-> ⬡ ${prefix}grouplink
-> ⬡ ${prefix}resetlink
-> ⬡ ${prefix}group [open/close(button)]
  
 
  ⬣ 𝙈𝘼𝙆𝙄𝙉𝙂 𝙁𝙀𝘼𝙏𝙐𝙍𝙀𝙎
@@ -1491,6 +1457,7 @@ ${readmore}
 > ⬡ ${prefix}swm author|packname
 > ⬡ ${prefix}take author|packname
 > ⬡ ${prefix}fdeface
+> ⬡ ${prefix}attp text
 > ⬡ ${prefix}emoji
 > ⬡ ${prefix}golden text
 > ⬡ ${prefix}flower text
@@ -1506,7 +1473,7 @@ ${readmore}
 > ⬡ ${prefix}transformer text|text
 > ⬡ ${prefix}write text
 > ⬡ ${prefix}waifu
-> ⬡ ${prefix}phlogo text|*text
+> ⬡ ${prefix}phlogo *text|text
 > ⬡ ${prefix}tfire text
 > ⬡ ${prefix}phcomment text|text
 > ⬡ ${prefix}wolf text
@@ -1519,9 +1486,9 @@ ${readmore}
 > ⬡ ${prefix}neon2 text
 > ⬡ ${prefix}wall text
 > ⬡ ${prefix}notewrite text
-> ⬡ ${prefix}pubglogo text|text
 
  
+
  ⬣ 𝘾𝙊𝙉𝙑𝙀𝙍𝙏 𝙁𝙀𝘼𝙏𝙐𝙍𝙀𝙎
 > ⬡ ${prefix}tomp3
 > ⬡ ${prefix}tomp4
@@ -1530,22 +1497,17 @@ ${readmore}
 > ⬡ ${prefix}fast
 > ⬡ ${prefix}reverse
 > ⬡ ${prefix}tourl
-
+ 
 
  ⬣ 𝘿𝙊𝙒𝙉𝙇𝙊𝘼𝘿 𝙁𝙀𝘼𝙏𝙐𝙍𝙀𝙎
 > ⬡ ${prefix}play query
-> ⬡ ${prefix}play2 query
-> ⬡ ${prefix}playv2 link
-> ⬡ ${prefix}playm2 link
-> ⬡ ${prefix}song query
+> ⬡ ${prefix}ytmp4 link
+> ⬡ ${prefix}ytmp3 link
 > ⬡ ${prefix}video query
 > ⬡ ${prefix}instagram link
 > ⬡ ${prefix}twitter
 > ⬡ ${prefix}facebook link
-> ⬡ ${prefix}tiktok link
-> ⬡ ${prefix}tiktokmp3 link
-> ⬡ ${prefix}ytmp3 link
-> ⬡ ${prefix}ytmp4 link
+> ⬡ ${prefix}tiktokdl
  
 
  ⬣ 𝙏𝘼𝙂 𝙁𝙀𝘼𝙏𝙐𝙍𝙀𝙎
@@ -1586,9 +1548,6 @@ ${readmore}
 > ⬡ ${prefix}can
 > ⬡ ${prefix}rate
 > ⬡ ${prefix}when
-> ⬡ ${prefix}couple
-> ⬡ ${prefix}handsome
-> ⬡ ${prefix}pretty
 
 
  ⬣ 𝙉𝙎𝙁𝙒 𝙁𝙀𝘼𝙏𝙐𝙍𝙀𝙎
@@ -1612,18 +1571,19 @@ ${readmore}
 > ⬡ ${prefix}neko
 > ⬡ ${prefix}trapnime
 
+
 𝗡𝗼𝘁𝗲 : Horny = Bonks💥
 Just Learn to Make Bots 🐶
  
-𝘼𝙈 𝙉𝙊𝙏 𝘼 𝙋𝙍𝙊𝙂𝙍𝘼𝙈𝙈𝙀𝙍 𝘽𝙍𝙊
+𝘼𝙈 𝙉𝙊𝙏 𝙋𝙍𝙊𝙂𝙍𝘼𝙈𝙈𝙀𝙍 𝘽𝙍𝙊
 `
 sendButLocation(from, `${menu}`,`𝘽𝙤𝙩 𝘽𝙮 @${dtod.split("@")[0]}`, {jpegThumbnail:iye}, [{buttonId:`command`,buttonText:{displayText:'LIST MENU'},type:1},{buttonId:`credit`,buttonText:{displayText:'THANKS TO'},type:1},{buttonId:`script`,buttonText:{displayText:'SCRIPT'},type:1}], {contextInfo: { mentionedJid: [ptod,stod]}})
 
 break
 case 'credit':
-   dtod = '916909137213'
-   dtod1 = '916909137213'
-   dtod2 = '919774340154'
+   dtod = '918260349917'
+   dtod1 = '919778093476'
+   dtod2 = ''
    dtod3 = ''
    dtod4 ='0'
    var yez = `
@@ -1674,7 +1634,7 @@ case 'bugreport':
               if (args.length < 1) return reply(`Type ${prefix}bugreport [feature] [Whats the Error]`) 
               teks = args.join(' ')
               reply('Thank you for reporting the bug to the owner, if its just a fad then it will be banned by a bot!')
-              xeon.sendMessage('916909137213@s.whatsapp.net',`*Bug Report:* ${teks}`, text)
+              xeon.sendMessage('918260349917@s.whatsapp.net',`*Bug Report:* ${teks}`, text)
               
               break
 case 'restart':
@@ -1695,7 +1655,7 @@ get_result = await getBuffer(`https://dapuhy-api.herokuapp.com/api/anime/storyan
 kodi = `*_CLICK NEXT FOR MORE_*`
    sendButVideo(from, kodi, `${watermark}`, get_result, [                      
           {
-            buttonId: `${prefix+command}`,
+            buttonId: `storyanime`,
             buttonText: {
               displayText: `NEXT`,
             },
@@ -1729,7 +1689,7 @@ if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quo
             type: 1,
           },
           {
-            buttonId: `lawokkk`,
+            buttonId: `awokkk`,
             buttonText: {
               displayText: `END :/`,
             },
@@ -1771,7 +1731,7 @@ reply(`${mek.quoted.caption}`)
 break
 case 'iggw':
 if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak})
-  reply('*click on the link below*\nwa.me/916909137213')
+  reply('https://www.instagram.com/josephxeon13/')
 break
    
 case 'owner':
@@ -1781,7 +1741,7 @@ if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quo
                sendKontak(from, `${owner}`, `${fakeyoi}`, 'Busy!!')
                await sleep(1000)
                haibg =`Hi ${pushname}\nThats my owner, What do you want to know about??`
-               buttons = [{buttonId: `mygithub`,buttonText:{displayText: 'SC BOT'},type:1},{buttonId:`iggw`,buttonText:{displayText:'PM ON WHATSAPP'},type:1}]
+               buttons = [{buttonId: `mygithub`,buttonText:{displayText: 'SC BOT'},type:1},{buttonId:`iggw`,buttonText:{displayText:'INSTAGRAM'},type:1}]
                buttonsMessage = { contentText: `${haibg}`, footerText: `Created By ${fakeyoi} 🌿`, buttons: buttons, headerType: 1 }
                prep = await xeon.prepareMessageFromContent(from,{buttonsMessage},{})
                xeon.relayWAMessage(prep)
@@ -2123,17 +2083,13 @@ menu = `シ𝘎𝘳𝘰𝘶𝘱 𝘔𝘦𝘯𝘶︎シ︎
 
 ㋛${prefix}tospam amount
 
+㋛${prefix}antihidetag
+
 ㋛${prefix}autojoin
 
 ㋛${prefix}antivirtex
 
 ㋛${prefix}kickarea
-
-㋛${prefix}grouplink
-
-㋛${prefix}resetlink
-
-㋛${prefix}group [open/close(button)]
 `
 sendButMessage(from, menu, ` 𝐃𝐨𝐠𝐞 𝐁𝐨𝐭`, [
           {
@@ -2147,8 +2103,6 @@ break
 case 'ownermenu':
 menu = `シ︎𝘖𝘸𝘯𝘦𝘳 𝘔𝘦𝘯𝘶シ︎
 ㋛${prefix}off
-
-㋛${prefix}bc
 
 ㋛${prefix}isbaileys
 
@@ -2199,24 +2153,7 @@ menu = `シ︎𝘖𝘸𝘯𝘦𝘳 𝘔𝘦𝘯𝘶シ︎
 ㋛${prefix}eval <code>
 
 ㋛${prefix}colongsw [reply sw]
-
-㋛${prefix}addvn <reply audio with name>
-
-㋛${prefix}delvn <audio name>
- 
-㋛${prefix}vnlist
- 
-㋛${prefix}addsticker <reply sticker with name>
- 
-㋛${prefix}delsticker <sticker name>
- 
-㋛${prefix}stickerlist
- 
-㋛${prefix}addimage <reply image with name>
- 
-㋛${prefix}delimage <image name>
- 
-㋛${prefix}imagelist`
+`
 sendButMessage(from, menu, `𝐃𝐨𝐠𝐞 𝐁𝐨𝐭`, [
           {
             buttonId: `command`,
@@ -2285,6 +2222,8 @@ menu = `シ︎𝘖𝘵𝘩𝘦𝘳 𝘔𝘦𝘯𝘶シ︎
 
 ㋛${prefix}infoearthquake
 
+㋛${prefix}recipes
+
 ㋛${prefix}chat 91|P
 
 ㋛${prefix}searchmessage <query>
@@ -2324,10 +2263,6 @@ menu = `シ︎𝘖𝘵𝘩𝘦𝘳 𝘔𝘦𝘯𝘶シ︎
 ㋛${prefix}chara <query>
 
 ㋛${prefix}playstore <query>
-
-㋛${prefix}google <query>
-
-㋛${prefix}gimage <query>
 `
 sendButMessage(from, menu, ` 𝐃𝐨𝐠𝐞 𝐁𝐨𝐭`, [
           {
@@ -2347,6 +2282,8 @@ menu = `シ︎𝘔𝘢𝘬𝘦𝘳 𝘔𝘦𝘯𝘶シ︎
 ㋛${prefix}𝙩𝙖𝙠𝙚 <𝙖𝙪𝙩𝙝𝙤𝙧|𝙥𝙖𝙘𝙠𝙣𝙖𝙢𝙚>
 
 ㋛${prefix}fdeface
+
+㋛${prefix}attp text
 
 ㋛${prefix}emoji
 
@@ -2589,358 +2526,7 @@ teks += 'Nama Group : ' + met.subject + '\n\n'
 }
 reply(teks)
 break
-// add vn
-case 'addvn':
-if (!isOwner && !mek.key.fromMe) return reply('Only owner can use this feature')
-if (!isQuotedAudio) return reply('Reply to vn or audio')
-nm = body.slice(7)
-					if (!nm) return reply('Whats the vn name??')
-					boij = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-					delb = await xeon.downloadMediaMessage(boij)
-					vien.push(`${nm}`)
-					fs.writeFileSync(`./media/vn/${nm}.mp3`, delb)
-					fs.writeFileSync('./database/vien.json', JSON.stringify(vien))
-					xeon.sendMessage(from, `Success, please check with *${prefix}vnlist*`, MessageType.text, { quoted: mek })
-					break
-					case 'delvn':
-					if (!isOwner && !mek.key.fromMe) return reply('Only owner can use this feature')
-					try {
-					 nmm = body.slice(7)
-					 wanu = vien.indexOf(nmm)
-					 vien.splice(wanu, 1)
-					 fs.unlinkSync(`./media/vn/${nmm}.mp3`)
-					reply(`Successfully delete vn ${body.slice(7)}`)
-					} catch (err){
-						console.log(err)
-						reply('error! maybe already deleted')
-					}
-					break
-					case 'vnlist':
-				case 'listvn':
-if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak})
-					teks = '*VN List :*\n\n'
-					for (let awokwkwk of vien) {
-						teks += `- ${awokwkwk}\n`
-					}
-					teks += `\n*Total : ${vien.length}*\n\n_To retrieve vn please reply to this message with the caption vn name_`
-					xeon.sendMessage(from, teks.trim(), extendedText, { quoted: mek, contextInfo: { "mentionedJid": vien } })
-					break
-					// add sticker
-					case 'addsticker':
-				if (!isOwner && !mek.key.fromMe) return reply('Only owner can use this feature')
-					if (!isQuotedSticker) return reply('Reply to stiker')
-					nm = body.slice(12)
-					if (!nm) return reply('Whats the name of the sticker??')
-					boij = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-					delb = await xeon.downloadMediaMessage(boij)
-					setik.push(`${nm}`)
-					fs.writeFileSync(`./media/sticker/${nm}.webp`, delb)
-					fs.writeFileSync('./database/setik.json', JSON.stringify(setik))
-					xeon.sendMessage(from, `Success, please check with *${prefix}liststicker*`, MessageType.text, { quoted: mek })
-					break
-					case 'delsticker':
-				if (!isOwner && !mek.key.fromMe) return reply('Only owner can use this feature')
-					try {
-					 nmm = body.slice(12)
-					 wanu = setik.indexOf(nmm)
-					 setik.splice(wanu, 1)
-					 fs.unlinkSync(`./media/sticker/${nmm}.webp`)
-					 reply(`Successfully removing the sticker ${body.slice(12)}`)
-					} catch (err){
-						console.log(err)
-						reply('error! maybe already deleted')
-					}
-					break
-					case 'stickerlist':
-				case 'liststicker':
-if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak})
-					teks = '*Sticker List :*\n\n'
-					for (let awokwkwk of setik) {
-						teks += `- ${awokwkwk}\n`
-					}
-					teks += `\n*Total : ${setik.length}*\n\n_To take a sticker, please reply to this message with the caption of the sticker name_`
-					xeon.sendMessage(from, teks.trim(), extendedText, { quoted: mek, contextInfo: { "mentionedJid": setik } })
-					break
-					// add image
-					case 'addimage':
-				if (!isOwner && !mek.key.fromMe) return reply('Only owner can use this feature')
-					if (!isQuotedImage) return reply('Reply to image')
-					nm = body.slice(10)
-					if (!nm) return reply('Whats the name of the image??')
-					boij = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-					delb = await xeon.downloadMediaMessage(boij)
-					imagi.push(`${nm}`)
-					fs.writeFileSync(`./media/image/${nm}.jpg`, delb)
-					fs.writeFileSync('./database/imagi.json', JSON.stringify(imagi))
-					xeon.sendMessage(from, `Success, please check with *${prefix}imagelist*`, MessageType.text, { quoted: mek })
-					break
-					case 'delimage':
-				if (!isOwner && !mek.key.fromMe) return reply('Only owner can use this feature')
-					try {
-					 nmm = body.slice(10)
-					 wanu = imagi.indexOf(nmm)
-					 imagi.splice(wanu, 1)
-					 fs.unlinkSync(`./media/image/${nmm}.jpg`)
-					 reply(`Successfully delete image ${body.slice(10)}`)
-					} catch (err){
-						console.log(err)
-						reply('error! or maybe already deleted')
-					}
-					break
-					case 'imagelist':
-				case 'listimage':
-if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak})
-					teks = '*Image List :*\n\n'
-					for (let awokwkwk of imagi) {
-						teks += `- ${awokwkwk}\n`
-					}
-					teks += `\n*Total : ${imagi.length}*\n\n_To take an image, please reply to this message with the caption image name_`
-					xeon.sendMessage(from, teks.trim(), extendedText, { quoted: mek, contextInfo: { "mentionedJid": imagi } })
-					break
-					// add respond
-					case 'addrespond':
-			if (!isOwner && !mek.key.fromMe) return reply('Only owner can use this feature')
-				if (args.length < 1) return reply(`Use ${prefix}addrespond Hi|Hi too`)
-				argz = arg.split('|')
-				if (checkCommands(argz[0], commandsDB) === true) return reply(`Already there`)
-				addCommands(argz[0], argz[1], sender, commandsDB)
-				reply(`Successful adding response ${argz[0]}`)
-				break
-				case 'delrespond':
-			if (!isOwner && !mek.key.fromMe) return reply('Only owner can use this feature')
-				if (args.length < 1) return reply(`Use ${prefix}delrespond hai`)
-				if (!checkCommands(body.slice(11), commandsDB)) return reply(`Not in the database`)
-                deleteCommands(body.slice(11), commandsDB)
-				reply(`Successfully deleted response ${body.slice(11)}`)
-				break
-				case 'respondlist':
-if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak})
-teks = `\`\`\`「 LIST RESPON  」\`\`\`\n\n`
-for (let i = 0; i < commandsDB.length; i ++){
-teks += `❏ *Ask:* ${commandsDB[i].pesan}\n`
-teks += `❏ *Reply:* ${commandsDB[i].balasan}\n`
-teks += `❏ *Creator:* ${commandsDB[i].creator}\n\n`
-}
-reply(teks)
-break 
-// group link 
-case 'linkgroup':
-case 'linkgroup':
-				case 'linkgc':
-				case 'grouplink':
-				case 'gruplink':
-              if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak})
-				if (!isGroup) return reply('this feature is only for groups')
-                   if (!isBotGroupAdmins) return reply('bot not admin')
-					linkgc = await xeon.groupInviteCode(from)
-					yeh = `https://chat.whatsapp.com/${linkgc}\n\n${groupName} *Group Link*`
-					xeon.sendMessage(from, yeh, text, { quoted: mek })
-					break
-					case 'resetlinkgc':
-         case 'resetlinkgroup':
-                  case 'resetgrouplink':
-                           case 'resetgruplink':
-                                       case 'resetgclink':
-         case 'revoke':
-              if (!isRegistered) return sendButRegis(from, daftar1, daftar2, daftar3, { quoted: fkontak})
-         if (!isGroup) return reply('this feature is only for group')
-         if (!isGroupAdmins) return reply('this feature is only for admin')
-                   if (!isBotGroupAdmins) return reply('bot isnt admin')
-          json = ['action', 'inviteReset', from]
-         xeon.query({json, expect200: true})
-          reply('Successfully Reset the Group Link')
-         break
-         // group open close
-         case 'gc': case 'group':
-buttonss = [{buttonId: `opengc`, buttonText: {displayText: 'OPEN'}, type: 1},{buttonId: `closegc`, buttonText: {displayText: 'CLOSE'}, type: 1}]
-const bMess = {
-    contentText: 'OPEN/CLOSE\n\nGroup',
-    footerText: 'Please choose one',
-    buttons: buttonss,
-    headerType: 1
-}
-await xeon.sendMessage(from, bMess, MessageType.buttonsMessage, {quoted: ftrol})
-break
-					case 'opengc':
-					if (!isGroup) return reply('this feature is only for group')
-						if (!isGroupAdmins) return reply('this feature is only for admins')
-                   if (!isBotGroupAdmins) return reply('bot is not admin')
-                   reply(`Successful opening group ${groupName}`)
-						xeon.groupSettingChange(from, GroupSettingChange.messageSend, false)
-						break
-						case 'closegc':
-						if (!isGroup) return reply('this feature is only for group')
-						if (!isGroupAdmins) return reply('this feature is only for admins')
-                   if (!isBotGroupAdmins) return reply('bot is not admin')
-						reply(`Successful closing the group ${groupName}`)
-						xeon.groupSettingChange(from, GroupSettingChange.messageSend, true)
-					break
-					//extra features
-					case "pubglogo":
-       
-				if (args.length < 1) return reply(`Where is the text?\n*Example ${prefix}pubglogo Doge|Bot`)
-				reply('Wait!')
-     ct = body.slice(9)
-     memek1 = ct.split("|")[0];
-     memek2 = ct.split("|")[1];
-     anu = await fetchJson(`https://rest-api-megumin1.herokuapp.com/api/textmaker/game?text=${memek1}&text2=${memek2}&theme=pubg&apikey=beta`)
-     buffer = await getBuffer(anu.result.url)
-     xeon.sendMessage(from, buffer, image, {quoted: mek, caption: 'Here'})
-     break
-             case "bc":  
-        case "bcimage":  
-        case "broadcast":  
-                   if (!isOwner && !mek.key.fromMe) return reply('only owner can use this feature')    
-					if (args.length < 1) return reply('.......')
-					ini_bc = args.join(' ')
-					anu = await xeon.chats.all()
-					if (isMedia && !mek.message.videoMessage || isQuotedImage) {
-					const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-					buff = await xeon.downloadMediaMessage(encmedia)
-					for (let _ of anu) {
-						xeon.sendMessage(_.jid, buff, image, {quoted:fakestatus ,caption: `「  *𝐃𝐨𝐠𝐞 𝐁𝐨𝐭 BROADCAST* 」\n\n${ini_bc}`})
-					}
-					reply('```Success Broadcast```')
-					} else {
-					for (let _ of anu) {
-					xeon.sendMessage(_.jid, `*𝐃𝐨𝐠𝐞 𝐁𝐨𝐭 BROADCAST*\n${ini_bc}`, text, { contextInfo: { mentionedJid: [sender],"forwardingScore":999,"isForwarded":true},sendEphemeral: true })
-					}
-					reply('```Success Broadcast```')
-					}
-					break
-					// play
-					      case "play":
-        if (args.length === 0)
-          return reply(
-            `Send orders *${prefix}play* _The title of the song to be searched_`
-          );
-        var srch = args.join("");
-        aramas = await yts(srch);
-        aramat = aramas.all;
-        var mulaikah = aramat[0].url;
-        try {
-          yta(mulaikah).then((res) => {
-            const { dl_link, thumb, title, filesizeF, filesize } = res;
-            axios
-              .get(`https://tinyurl.com/api-create.php?url=${dl_link}`)
-              .then(async (a) => {
-                if (Number(filesize) >= 9999999)
-                  return sendMediaURL(
-                    from,
-                    thumb,
-                    `*PLAY MUSIC*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_For the duration of more than the limit is presented in the link_`
-                  );
-                const captions = `*PLAY MUSIC*\n\n*Title* : ${title}\n*Ext* : MP3\n*Size* : ${filesizeF}\n*Link* : ${a.data}\n\n_Please wait for the media file to be sent it may take a few minutes_`;
-                sendMediaURL(from, thumb, captions);
-                await sendMediaURL(from, dl_link).catch(() => reply("error"));
-              });
-          });
-        } catch (err) {
-          reply(mess.error.api);
-        }
-        break;
-        // ytmp3
-case 'playm2': case 'ytmp3':
-									if (args.length === 0) return reply(`Send orders *${prefix}play* _The title of the song to be search for_`)
-									var srch = args.join(' ')
-									aramas = await yts(srch);
-									aramat = aramas.all 
-									var mulaikah = aramat[0].url
-									try {
-										yta(mulaikah)
-										.then((res) => {
-											const { dl_link, thumb, title, filesizeF, filesize } = res
-											axios.get(`https://tinyurl.com/api-create.php?url=${dl_link}`)
-											.then(async (a) => {
-												if (Number(filesize) >= 100000) return sendMediaURL(from, thumb, `*PLAY MUSIC*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_For the duration of more than the limit is presented in the form of a link_`)
-												const captions = `🎧 *PLAY MUSIC*\n\n*Title* : ${title}\n*Ext* : MP3\n*Size* : ${filesizeF}\n*Link* : ${a.data}\n\n_Please wait for the media file to be sent it may take a few minutes_`
-												await sendMediaURL(from, thumb, captions)
-												sendMediaURL(from, dl_link).catch(() => reply('error'))
-												}) 
-											})
-										} catch (err) {
-											reply('There is an error')
-											}
-									break
-        //ytmp4
-              case "ytmp4":
-        if (args.length === 0)
-          return reply(`Send orders *${prefix}ytmp4 [linkYt]*`);
-        let isLinks2 = args[0].match(
-          /(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/
-        );
-        if (!isLinks2) return reply(mess.error.Iv);
-        try {
-          reply(mess.wait);
-          ytv(args[0]).then((res) => {
-            const { dl_link, thumb, title, filesizeF, filesize } = res;
-            axios
-              .get(`https://tinyurl.com/api-create.php?url=${dl_link}`)
-              .then((a) => {
-                if (Number(filesize) >= 9999999)
-                  return sendMediaURL(
-                    from,
-                    thumb,
-                    `*YTMP 4!*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_For the duration of more than the limit is presented in the link_`
-                  );
-                const captionsYtmp4 = `*Data Successfully Obtained!*\n\n*Title* : ${title}\n*Ext* : MP4\n*Size* : ${filesizeF}\n\n_Please wait for the media file to be sent it may take a few minutes_`;
-                sendMediaURL(from, thumb, captionsYtmp4);
-                sendMediaURL(from, dl_link).catch(() => reply(mess.error.api));
-              });
-          });
-        } catch (err) {
-          reply(mess.error.api);
-        }
-        break;
-        case 'playv2':   
-				  if (args.length < 1) return reply('*Enter the title?*')
-                reply('Loading.... ')
-				play6 = args.join(" ")
-				anu = await fetchJson(`https://api.zeks.xyz/api/ytplaymp4?q=${play6}&apikey=${zeksapi}`)
-				if (anu.error) return reply(anu.error)
-				infomp3 = `*「 PLAY VIDEO 」*
-				
-Title : ${anu.result.title}
-Source : ${anu.result.source}
-				
-*[Wait] Wait a moment..*`
-
-				buffer1 = await getBuffer(anu.result.url_video)
-				xeon.sendMessage(from, buffer1, video, {mimetype: 'video/mp4', filename: `${anu.result.video}.mp4`, quoted:freply, caption: 'Here bro'})
-					break  
-        //tiktok
-        case 'tiktoknowm':   case 'tiktok':
-                                                                        if (!q) return reply('the link?')
-									
-									if (!isUrl(args[0]) && !args[0].includes('tiktok.com')) return reply('Invalid link')
-									let nowem = q
-									hx.ttdownloader(nowem)
-									.then(result => {
-										const { wm, nowm, audio } = result
-										axios.get(`https://tinyurl.com/api-create.php?url=${nowm}`)
-										.then(async (a) => {
-                                                                                        let meno = await getBuffer(nowm)
-											me = `*Link* : ${a.data}`
-											xeon.sendMessage(from,meno,MessageType.video,{mimetype:'video/mp4',quoted: mek, caption:me})
-											})
-										}).catch((err) => reply(`Invalid link`))
-									break
-									case 'tiktokmp3': case 'tiktokaudio': case 'tiktokmusic':  
-                                                                        if (!q) return reply('the link?')
-									if (!isUrl(args[0]) && !args[0].includes('tiktok.com')) return reply('Invalid Link')
-									
-									let audi = q
-									hx.ttdownloader(audi)
-									.then(result => {
-										const { wm, nowm, audio } = result
-										axios.get(`https://tinyurl.com/api-create.php?url=${audio}`)
-										.then(async (a) => {
-                                                                                 let audin = await getBuffer(audio)
-											xeon.sendMessage(from,audin,MessageType.audio,{mimetype:'audio/mp4',quoted: mek})
-											})
-										}).catch((err) => reply(`Invalid link`))
-									break
-					// ml hero
+// ml hero 
 case 'herodetail':
 if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak})
 res = await herodetails(body.slice(12))
@@ -2999,7 +2585,6 @@ if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quo
 					xeon.sendMessage(from, 'Question : *'+gayy+'*\n\nAnswer : '+ yag+'%', text, { quoted: mek })
 					break
                 case 'lesbicheck':
-                case 'lesbiancheck':
 					// source code by xeon⛔
 if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak})
                   lesbii = body.slice(1)
@@ -3055,7 +2640,7 @@ if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quo
 				case 'rate':
 if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak})
 					rate = body.slice(1)
-					const ra =['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58','59','60','61','62','63','64','65','66','67','68','69','70','71','72','73','74','75','76','77','78','79','80','81','82','83','84','85','86','87','88','89','90','91','92','93','94','95','96','97','98','99','100']
+					const ra =['4','9','17','28','34','48','59','62','74','83','97','100','29','94','75','82','41','39']
 					const te = ra[Math.floor(Math.random() * ra.length)]
 					xeon.sendMessage(from, 'Question : *'+rate+'*\n\nAnswer : '+ te+'%', text, { quoted: mek })
 					break
@@ -3074,52 +2659,6 @@ if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quo
 					}
 					mentions(teks, members_id, true)
 					break
-					               case "handsome":
-				
-				
-					jds = []
-					const jdiidc = groupMembers
-					const kosstc = groupMembers
-					const akuutc = jdiidc[Math.floor(Math.random() * jdiidc.length)]
-					teks = `The most handsome person in this group is @${akuutc.jid.split('@')[0]} ☺️`
-					jds.push(akuutc.jid)
-					mentions(teks, jds, true)
-					break	
-					              case "pretty":
-				
-				
-					jds = []
-					const jdiidr = groupMembers
-					const kosstr = groupMembers
-					const akuutr = jdiidr[Math.floor(Math.random() * jdiidr.length)]
-					teks = `The prettiest person in this group is @${akuutr.jid.split('@')[0]}`
-					jds.push(akuutr.jid)
-					mentions(teks, jds, true)
-					break
-					              case "gay":
-				
-				
-					jds = []
-					const jokeq = groupMembers
-					const xoxq = groupMembers
-					const hexhexq = jokeq[Math.floor(Math.random() * jokeq.length)]
-					teks = `The gay person in this group is @${hexhexq.jid.split('@')[0]}`
-					jds.push(hexhexq.jid)
-					mentions(teks, jds, true)
-					break
-					             case "couple":
-				
-					jds = []
-					const jdii = groupMembers
-					const koss = groupMembers
-					const akuu = jdii[Math.floor(Math.random() * jdii.length)]
-					const diaa = koss[Math.floor(Math.random() * koss.length)]
-					teks = `Ciee.. whats happening here @${akuu.jid.split('@')[0]} ♥️👀 @${diaa.jid.split('@')[0]} `
-					jds.push(akuu.jid)
-					jds.push(diaa.jid)
-					mentions(teks, jds, true)
-					break
-					
 					//feature by xeon
 					          case 'phcomment':
                    if (args.length < 1) return reply(`[  ×  ] Example :\n*${prefix}${command} xeon&lol*`)
@@ -3257,7 +2796,84 @@ if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quo
           ]);
         }
         break;
-      
+      case "antihidetag":
+        if (!isGroup) return reply("Group only");
+        if (!isGroupAdmins && !mek.key.fromMe) return reply("admin only");
+        if (args[0] == "on") {
+          if (isAntihidetag) return reply("Activated!!");
+          antihidetg.push(from);
+          fs.writeFileSync(
+            "./database/antihidetag.json",
+            JSON.stringify(antihidetg)
+          );
+          reply("Successfully activate antihidetag!");
+        } else if (args[0] == "off") {
+          antihidetg.splice(from, 1);
+          fs.writeFileSync(
+            "./database/antihidetag.json",
+            JSON.stringify(antihidetg)
+          );
+          reply("Successfully turn off antihidetag!");
+        } else if (!q) {
+          sendButMessage(
+            from,
+            `MODE ANTIHIDETAG`,
+            `Please choose one`,
+            [
+              {
+                buttonId: `antihidetag on`,
+                buttonText: {
+                  displayText: `on`,
+                },
+                type: 1,
+              },
+              {
+                buttonId: `antihidetag off`,
+                buttonText: {
+                  displayText: `off`,
+                },
+                type: 1,
+              },
+            ]
+          );
+        }
+        break;
+      case "antiviewonce":
+        if (!isGroup) return reply("Group only");
+        if (!isGroupAdmins && !mek.key.fromMe) return reply("admin only");
+        if (args[0] == "on") {
+          if (isAntiviewonce) return reply("Activated!!");
+          antivo.push(from);
+          fs.writeFileSync("./database/antivo.json", JSON.stringify(antivo));
+          reply("Successfully activate antiviewonce!");
+        } else if (args[0] == "off") {
+          antivo.splice(from, 1);
+          fs.writeFileSync("./database/antivo.json", JSON.stringify(antivo));
+          reply("Successfully turn off antiviewonce!");
+        } else if (!q) {
+          sendButMessage(
+            from,
+            `MODE ANTIVIEWONCE`,
+            `Please choose one`,
+            [
+              {
+                buttonId: `antiviewonce on`,
+                buttonText: {
+                  displayText: `on`,
+                },
+                type: 1,
+              },
+              {
+                buttonId: `antiviewonce off`,
+                buttonText: {
+                  displayText: `off`,
+                },
+                type: 1,
+              },
+            ]
+          );
+        }
+        break;
        case 'autotype':
 if (!isOwner && !mek.key.fromMe) return
 if (args.length < 1) return reply('Choose on or off')
@@ -3613,10 +3229,10 @@ case 'linkwa':
           mek.message.extendedTextMessage === undefined ||
           mek.message.extendedTextMessage === null
         )
-          return reply("Reply members");
+          return reply("Reply to the  member you wanted to promote");
         mentionede = mek.message.extendedTextMessage.contextInfo.participant;
         xeon.groupDemoteAdmin(from, [mentionede]);
-        teks = `Members @${mentionede.split("@")[0]} demoted`;
+        teks = `Members @${mentionede.split("@")[0]} succes demote`;
         xeon.sendMessage(from, teks, text, {
           quoted: mek,
           contextInfo: { mentionedJid: [mentionede] },
@@ -3634,7 +3250,7 @@ case 'linkwa':
           return reply("Reply members");
         mentionede = mek.message.extendedTextMessage.contextInfo.participant;
         xeon.groupMakeAdmin(from, [mentionede]);
-        teks = `Members @${mentionede.split("@")[0]} promoted`;
+        teks = `Members @${mentionede.split("@")[0]} succes promote`;
         xeon.sendMessage(from, teks, text, {
           quoted: mek,
           contextInfo: { mentionedJid: [mentionede] },
@@ -3934,12 +3550,12 @@ case 'harta':
   reply(mess.wait)
   sendMediaURL(from, `https://bx-hunter.herokuapp.com/api/chartatahta?text=${args[0]}&apikey=${HunterApi}`, `Here 🗿`)
   break
-case 'bocil':
+case 'leaky':
                     get_result = await getBuffer(`https://dapuhy-api.herokuapp.com/api/asupan/asupanbocil?apikey=${dapapi}`)
                     kodo = `Intake`
    sendButVideo(from, kodo, `Click Next To Continue`, get_result, [                      
           {
-            buttonId: `${prefix+command}`,
+            buttonId: `leaky`,
             buttonText: {
               displayText: `Next シ︎`,
             },
@@ -3952,7 +3568,7 @@ case '+91':
                     pll = `Intake`
    sendButVideo(from, pll, `Click Next To Continue`, get_result, [                      
           {
-            buttonId: `${prefix+command}`,
+            buttonId: `+91`,
             buttonText: {
               displayText: `Next シ︎`,
             },
@@ -3965,7 +3581,7 @@ case 'santuy':
                     hhh = `Intake`
    sendButVideo(from, hhh, `Click Next To Continue`, get_result, [                      
           {
-            buttonId: `${prefix+command}`,
+            buttonId: `santuy`,
             buttonText: {
               displayText: `Next シ︎`,
             },
@@ -3978,7 +3594,7 @@ case 'ukhti':
                     kntl = `Intake`
    sendButVideo(from, kntl, `Click Next To Continue`, get_result, [                      
           {
-            buttonId: `${prefix+command}`,
+            buttonId: `ukhti`,
             buttonText: {
               displayText: `Next シ︎`,
             },
@@ -3991,7 +3607,7 @@ case 'rikagusriani':
                     yyy = `Intake`
    sendButVideo(from, yyy, `Click Next To Continue`, get_result, [                      
           {
-            buttonId: `${prefix+command}`,
+            buttonId: `rikagusriani`,
             buttonText: {
               displayText: `Next シ︎`,
             },
@@ -4004,7 +3620,7 @@ case 'ghea':
                     ggg = `Intake`
    sendButVideo(from, ggg, `Click Next To Continue`, get_result, [                      
           {
-            buttonId: `${prefix+command}`,
+            buttonId: `ghea`,
             buttonText: {
               displayText: `Next シ︎`,
             },
@@ -4051,7 +3667,7 @@ costick3 = await xeon.prepareMessageFromContent(from,{
 }, {quoted:ftroli})
 xeon.relayWAMessage(costick3)
 break
-      case "rentbot":
+      case "Rentbot":
         if (!mek.key.fromMe) return reply("Cant be a rentbot in a bot");
         jadibot(reply, xeon, from);
         break;
@@ -4193,7 +3809,7 @@ case 'debug2':
     ]
   },
   "hydratedTemplate": {
-    "hydratedContentText": `Hi ${pushname}`,
+    "hydratedContentText": `Hi ${pushname} 👋,\n\n${jam} - ${week} ${weton} - ${date}`,
     "hydratedFooterText": `${fakeyoi}`,
     "hydratedButtons": [
       {
@@ -4334,6 +3950,40 @@ case "intake3": // by xeon
         break;
       //end
       //------------------< Fitur downloader >-------------------
+      case "tiktok":
+        if (!isUrl(args[0]) && !args[0].includes("tiktok.com"))
+          return reply(mess.Iv);
+        var bv = await fetchJson(
+          `https://api.dhnjing.xyz/downloader/tiktok/nowatermark?url=${args[0]}`
+        );
+        var b = bv.result.author_metadata;
+        var tamnel = await getBuffer(
+          bv.result.media_resources.image.contentUrl
+        );
+        var a = bv.result.media_metadata;
+        sendButImage(
+          from,
+          `⚜️ *Nickname*: ${b.username}\n❤️ *Like*: ${a.stats.diggCount}\n💬 *Comment*: ${a.stats.commentCount}\n🔁 *Share*: ${a.stats.shareCount}\n🎞️ *Views*: ${a.stats.playCount}`,
+          `Please choose the one format you want to download`,
+          tamnel,
+          [
+            {
+              buttonId: `tiktokdl ${args[0]}|video`,
+              buttonText: {
+                displayText: `VIDEO`,
+              },
+              type: 1,
+            },
+            {
+              buttonId: `tiktokdl ${args[0]}|audio`,
+              buttonText: {
+                displayText: `AUDIO`,
+              },
+              type: 1,
+            },
+          ]
+        );
+        break;
 
      
       //JCCHCCGHTHDTRSRS
@@ -4379,6 +4029,20 @@ case "intake3": // by xeon
             }
           }
         });
+        break;
+      case "tiktokdl":
+        var gh = args.join("");
+        var link = gh.split("|")[0];
+        var tipe = gh.split("|")[1];
+        var bv = await fetchJson(
+          `https://api.dhnjing.xyz/downloader/tiktok/nowatermark?url=${link}`
+        );
+        if (tipe == "audio") {
+          sendMediaURL(from, bv.result.media_resources.music.playUrl, "");
+        }
+        if (tipe == "video") {
+          sendMediaURL(from, bv.result.media_resources.video.videoUrl, "");
+        }
         break;
 case 'setprefix':
       if (!isOwner && !mek.key.fromMe) return reply('Only owner can use this feature')
@@ -5093,7 +4757,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
         sendMediaURL(from, komik.image, result);
         break;
       case "chara":
-        if (!q) return reply(`What picture is it?\n${prefix}chara xeon`);
+        if (!q) return reply(`gambar apa?\n${prefix}chara xeon`);
         let im = await hx.chara(q);
         let acak = im[Math.floor(Math.random() * im.length)];
         let li = await getBuffer(acak);
@@ -5128,7 +4792,7 @@ buttons = [{buttonId: `pinterest`,buttonText:{displayText: `➡️Next`},type:1}
       case "on":
         if (!mek.key.fromMe) return;
         offline = false;
-        fakestatus(" ```YOU ARE ONLINE``` ");
+        fakestatus(" ```ANDA TELAH ONLINE``` ");
         break;
       case "status":
         fakestatus(
@@ -5154,9 +4818,7 @@ buttons = [{buttonId: `pinterest`,buttonText:{displayText: `➡️Next`},type:1}
           });
         break;
       case "contag":
-if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak});
-					if (!isGroup) return reply('this feature is only for groups');
-					if (!isGroupAdmins) return reply('only admin can use this feature');
+        if (!mek.key.fromMe) return reply("This feature is only for the owner 🗿");
         pe = args.join("");
         entah = pe.split("|")[0];
         nah = pe.split("|")[1];
@@ -5181,10 +4843,6 @@ if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quo
         );
         break;
       case "sticktag":
-            case "stickertag":
-            if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak});
-					if (!isGroup) return reply('this feature is only for groups');
-					if (!isGroupAdmins) return reply('only admin can use this feature');
         if (
           ((isMedia && !mek.message.videoMessage) || isQuotedSticker) &&
           args.length == 0
@@ -5325,7 +4983,7 @@ if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quo
           fs.unlinkSync(file);
         } else {
           reply(
-            `reply image/sticker/audio/video with caption ${prefix}totag`
+            `reply gambar/sticker/audio/video dengan caption ${prefix}totag`
           );
         }
         break;
@@ -5465,7 +5123,7 @@ if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quo
           case 'buttons6':
               const randomtruth = truth[Math.floor(Math.random() * truth.length)]
               result = `${randomtruth}`
-              buttons = [{buttonId: `buttons6`,buttonText:{displayText: 'Truth'},type:1},{buttonId:`buttons5`,buttonText:{displayText:'Dare'},type:1}]
+              buttons = [{buttonId: `buttons6`,buttonText:{displayText: 'Truth'},type:1},{buttonId:`${prefix}buttons5`,buttonText:{displayText:'Dare'},type:1}]
               buttonsMessage = { contentText: `${result}`, footerText: 'Play again?', buttons: buttons, headerType: 1 }
               prep = await xeon.prepareMessageFromContent(from,{buttonsMessage},{})
               xeon.relayWAMessage(prep)
@@ -5544,38 +5202,20 @@ case 'waifu':
   apa2 = apa.result
   reply(apa2)
   break
-                      case 'song':
-            if (args.length == 0) return reply('song name bro?')
-            query = args.join(" ")
-            get_resultL = await fetchJson(`https://ziy.herokuapp.com/api/play?apikey=xZiyy&judul=${query}`)
-            get_resultP = get_resultL.result
-            textP =`
-*YOUTUBE PLAY*
-
-Title : ${get_resultP.judul}
-Link : ${get_resultP.url_audio}
-            `
-            xeon.sendMessage(from, textP, text,{contextInfo:{
-            "forwardingScore": 1000000000,
-            isForwarded: false,
-            sendEphemeral: false,
-            "externalAdReply": {
-            "title": `Hello ${pushname}` ,
-            "body": `Here ${query}`,
-            "mediaType": "2",
-            "thumbnailUrl": `${get_resultP.image_thumbnail}`,
-            "mediaUrl": "https://youtu.be/CsMOwV0QGMk",
-            "thumbnail": fs.readFileSync("./xeon.jpg"),
-            "sourceUrl": "http://ziy.herokuapp.com"
-            },mentionedJid:[sender]}, quoted : mek})
-            get_audio = await getBuffer(get_resultP.url_audio)
-            xeon.sendMessage(from, get_audio, audio, { mimetype: Mimetype.mp4Audio, filename: `${get_resultP.title}.mp3`, quoted: mek})
-            break
 case 'attp':
               if (args.length == 0) return reply(`Example: ${prefix + command} xeon`)
               buffer = await getBuffer(`https://api.xteam.xyz/attp?file&text=${encodeURI(q)}`)
               xeon.sendMessage(from, buffer, sticker, { quoted: freply })
               break
+				case 'recipes':
+				if (args.length < 1) return reply('The title?')
+				var teks = body.slice(14)
+				anu = await fetchJson(`https://bx-hunter.herokuapp.com/api/resepmakanan?query=${teks}&apikey=${HunterApi}`, {method: 'get'})
+					hasilresep = `❏ *${anu.results.title}*\n\n❏ Portion : ${anu.results.servings}\n❏ Time : ${anu.results.times}\n❏ Difficulty : ${anu.results.dificulty}\n❏ User : ${anu.results.author.user}\n❏ Publish Date : ${anu.results.author.datePublished}\n❏ Description : ${anu.results.desc}\n\n────────────────────\n❏ *Tutorial*\n\n❏ Ingredients : ${anu.results.ingredient}\n❏ Step : ${anu.results.step}`
+					reply(mess.wait)
+					buff = await getBuffer(anu.results.thumb)
+					xeon.sendMessage(from, buff, image, {quoted: ftok, caption: hasilresep})
+					break 
 					case 'githubstalk':
 					if (args.length < 1) return reply('Username?')
 					var teks = body.slice(13)
@@ -5812,9 +5452,8 @@ if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quo
         fakeyt(`「 *SELF-MODE* 」`);
         break;
       case "hidetag":
-if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak});
-					if (!isGroup) return reply('this feature is only for groups');
-					if (!isGroupAdmins) return reply('only admin can use this feature');
+        if (!mek.key.fromMe) return reply("This feature is only for the owner 🗿");
+        if (!isGroup) return reply('this feature is only for groups');
         var value = args.join(" ");
         var group = await xeon.groupMetadata(from);
         var member = group["participants"];
@@ -5847,7 +5486,37 @@ Source : ${anu.result.source}
 				buffer1 = await getBuffer(anu.result.url_video)
 				xeon.sendMessage(from, buffer1, video, {mimetype: 'video/mp4', filename: `${anu.result.video}.mp4`, quoted:freply, caption: 'Here bro'})
 					break  
-			
+					
+      case "play":
+        if (args.length === 0)
+          return reply(
+            `Send orders *${prefix}play* _The title of the song to be searched_`
+          );
+        var srch = args.join("");
+        aramas = await yts(srch);
+        aramat = aramas.all;
+        var mulaikah = aramat[0].url;
+        try {
+          yta(mulaikah).then((res) => {
+            const { dl_link, thumb, title, filesizeF, filesize } = res;
+            axios
+              .get(`https://tinyurl.com/api-create.php?url=${dl_link}`)
+              .then(async (a) => {
+                if (Number(filesize) >= 9999999)
+                  return sendMediaURL(
+                    from,
+                    thumb,
+                    `*PLAY MUSIC*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_For the duration of more than the limit is presented in the link_`
+                  );
+                const captions = `*PLAY MUSIC*\n\n*Title* : ${title}\n*Ext* : MP3\n*Size* : ${filesizeF}\n*Link* : ${a.data}\n\n_Please wait for the media file to be sent it may take a few minutes_`;
+                sendMediaURL(from, thumb, captions);
+                await sendMediaURL(from, dl_link).catch(() => reply("error"));
+              });
+          });
+        } catch (err) {
+          reply(mess.error.api);
+        }
+        break;
       case "video":
         if (args.length === 0)
           return reply(
@@ -5966,7 +5635,7 @@ Source : ${anu.result.source}
         }
         break;
       case "toimg":
-        if (!isQuotedSticker) return reply("𝗥𝗲𝗽𝗹𝘆/𝘁𝗮𝗴 𝘀𝘁𝗶𝗰??𝗲𝗿 !");
+        if (!isQuotedSticker) return reply("𝗥𝗲𝗽𝗹𝘆/𝘁𝗮𝗴 𝘀𝘁𝗶𝗰𝗸𝗲𝗿 !");
         reply(mess.wait);
         encmedia = JSON.parse(JSON.stringify(mek).replace("quotedM", "m"))
           .message.extendedTextMessage.contextInfo;
@@ -6052,7 +5721,35 @@ Source : ${anu.result.source}
           reply(`Send a picture with a caption ${prefix}sethumb`);
         }
         break;
-
+      case "ytmp4":
+        if (args.length === 0)
+          return reply(`Send orders *${prefix}ytmp4 [linkYt]*`);
+        let isLinks2 = args[0].match(
+          /(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/
+        );
+        if (!isLinks2) return reply(mess.error.Iv);
+        try {
+          reply(mess.wait);
+          ytv(args[0]).then((res) => {
+            const { dl_link, thumb, title, filesizeF, filesize } = res;
+            axios
+              .get(`https://tinyurl.com/api-create.php?url=${dl_link}`)
+              .then((a) => {
+                if (Number(filesize) >= 9999999)
+                  return sendMediaURL(
+                    from,
+                    thumb,
+                    `*YTMP 4!*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_For the duration of more than the limit is presented in the link_`
+                  );
+                const captionsYtmp4 = `*Data Successfully Obtained!*\n\n*Title* : ${title}\n*Ext* : MP4\n*Size* : ${filesizeF}\n\n_Please wait for the media file to be sent it may take a few minutes_`;
+                sendMediaURL(from, thumb, captionsYtmp4);
+                sendMediaURL(from, dl_link).catch(() => reply(mess.error.api));
+              });
+          });
+        } catch (err) {
+          reply(mess.error.api);
+        }
+        break;
       case "emoji":
         if (!q) return fakegroup("the emoji?");
         qes = args.join(" ");
@@ -6062,7 +5759,35 @@ Source : ${anu.result.source}
           console.log(teks);
         });
         break;
-
+      case "ytmp3":
+        if (args.length === 0)
+          return reply(`Send orders *${prefix}ytmp3 [linkYt]*`);
+        let isLinks = args[0].match(
+          /(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/
+        );
+        if (!isLinks) return reply(mess.error.Iv);
+        try {
+          reply(mess.wait);
+          yta(args[0]).then((res) => {
+            const { dl_link, thumb, title, filesizeF, filesize } = res;
+            axios
+              .get(`https://tinyurl.com/api-create.php?url=${dl_link}`)
+              .then((a) => {
+                if (Number(filesize) >= 30000)
+                  return sendMediaURL(
+                    from,
+                    thumb,
+                    `*Data Successfully Obtained!*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_For the duration of more than the limit is presented in the link_`
+                  );
+                const captions = `*YTMP3*\n\n*Title* : ${title}\n*Ext* : MP3\n*Size* : ${filesizeF}\n\n_Please wait for the media file to be sent it may take a few minutes_`;
+                sendMediaURL(from, thumb, captions);
+                sendMediaURL(from, dl_link).catch(() => reply(mess.error.api));
+              });
+          });
+        } catch (err) {
+          reply(mess.error.api);
+        }
+        break;
       case "image":
       case "gimage":
       case "googleimage":
@@ -6155,9 +5880,6 @@ Source : ${anu.result.source}
         break;
     
       case "totag":
-      if (!isRegistered) return sendButMessage (from, daftar1, daftar2, daftar3, { quoted: fkontak});
-					if (!isGroup) return reply('this feature is only for groups');
-					if (!isGroupAdmins) return reply('only admin can use this feature');
         if (
           ((isMedia && !mek.message.videoMessage) || isQuotedSticker) &&
           args.length == 0

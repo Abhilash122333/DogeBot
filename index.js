@@ -97,23 +97,23 @@ const asw1 = 'https://i.ibb.co/y0RYgzB/FB-IMG-1635413002830.jpg'
 const sip = fs.readFileSync('./stik/oksip.jpeg')
 const bgg = fs.readFileSync('./stik/fake.jpeg')
 //// Image ///
-const time2 = moment().tz("Asia/Jakarta").format("HH:mm:ss");
-    if (time2 < "24:59:00") {
+const time2 = moment().tz("Asia/kolkata").format("HH:mm:ss");
+    if (time2 < "23:59:00") {
       var ucapanWaktu = "Good night";
     }
-    if (time2 < "19:00:00") {
+    if (time2 < "18:00:00") {
       var ucapanWaktu = "Good evening🌞";
     }
-    if (time2 < "18:00:00") {
+    if (time2 < "15:00:00") {
       var ucapanWaktu = "Good afternoon🌄";
     }
     if (time2 < "15:00:00") {
       var ucapanWaktu = "Good afternoon☀️";
     }
-    if (time2 < "11:00:00") {
+    if (time2 < "09:00:00") {
       var ucapanWaktu = "Good morning🌅";
     }
-    if (time2 < "05:00:00") {
+    if (time2 < "03:00:00") {
       var ucapanWaktu = "Good night🌃";
     }
  // BATAS \\

@@ -98,19 +98,19 @@ const sip = fs.readFileSync('./stik/oksip.jpeg')
 const bgg = fs.readFileSync('./stik/fake.jpeg')
 //// Image ///
 const time2 = moment().tz("Asia/kolkata").format("HH:mm:ss");
-    if (time2 < "00:00:00") {
+    if (time2 < "22:00:00") {
       var ucapanWaktu = "Vry Good morning";
     }
-    if (time2 < "05:00:00") {
+    if (time2 < "17:00:00") {
       var ucapanWaktu = "Good Morning 🌄";
     }
     if (time2 < "12:00:00") {
       var ucapanWaktu = "Good afternoon☀️";
     }
-    if (time2 < "17:00:00") {
+    if (time2 < "05:00:00") {
       var ucapanWaktu = "Good evening 🌆";
     }
-    if (time2 < "22:00:00") {
+    if (time2 < 00:00:00") {
       var ucapanWaktu = "Good night 🌉";
     }
  // BATAS \\

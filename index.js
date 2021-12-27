@@ -97,7 +97,7 @@ const asw1 = 'https://i.ibb.co/y0RYgzB/FB-IMG-1635413002830.jpg'
 const sip = fs.readFileSync('./stik/oksip.jpeg')
 const bgg = fs.readFileSync('./stik/fake.jpeg')
 //// Image ///
-const time2 = moment().tz("Asia/Jakarta").format("HH:mm:ss");
+const time2 = moment().tz("Asia/India").format("HH:mm:ss");
     if (time2 < "24:59:00") {
       var ucapanWaktu = "Good night";
     }

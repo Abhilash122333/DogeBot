@@ -97,21 +97,24 @@ const asw1 = 'https://i.ibb.co/y0RYgzB/FB-IMG-1635413002830.jpg'
 const sip = fs.readFileSync('./stik/oksip.jpeg')
 const bgg = fs.readFileSync('./stik/fake.jpeg')
 //// Image ///
-const time2 = moment().tz("Asia/kolkata").format("HH:mm:ss");
-    if (time2 < "00:00:00") {
-      var ucapanWaktu = "Vry Good morning";
+const time2 = moment().tz("Asia/Jakarta").format("HH:mm:ss");
+    if (time2 < "24:59:00") {
+      var ucapanWaktu = "Good night";
     }
-    if (time2 < "05:00:00") {
-      var ucapanWaktu = "Good Morning 🌄";
+    if (time2 < "19:00:00") {
+      var ucapanWaktu = "Good evening🌞";
     }
-    if (time2 < "12:00:00") {
+    if (time2 < "18:00:00") {
+      var ucapanWaktu = "Good afternoon🌄";
+    }
+    if (time2 < "15:00:00") {
       var ucapanWaktu = "Good afternoon☀️";
     }
-    if (time2 < "17:00:00") {
-      var ucapanWaktu = "Good evening 🌆";
+    if (time2 < "11:00:00") {
+      var ucapanWaktu = "Good morning🌅";
     }
-    if (time2 < 22:00:00") {
-      var ucapanWaktu = "Good night 🌉";
+    if (time2 < "05:00:00") {
+      var ucapanWaktu = "Good night🌃";
     }
  // BATAS \\
 menusimpel = false
@@ -926,7 +929,7 @@ remoteJid :"6289523258649-1604595598@g.us" }: {})
                     },message:{"orderMessage":{"orderId":"174238614569481","thumbnail":fs.readFileSync(`./stik/thumb.jpeg`),"itemCount":10,"status":"INQUIRY","surface":"CATALOG","message":`𝐃𝐨𝐠𝐞 𝐁𝐨𝐭`,"token":"AR6xBKbXZn0Xwmu76Ksyd7rnxI+Rx87HfinVlW4lwXa6JA=="}}}, contextInfo: {"forwardingScore":999,"isForwarded":true},sendEphemeral: true})}
 // Katalog
 const reply = (teks) => {
-             res = xeon.prepareMessageFromContent(from,{ "orderMessage": { "itemCount": 111119999, "message": teks, "footerText": "*Xeon*", "thumbnail": bgg, "surface": 'CATALOG' }}, {quoted:ftrol})
+             res = xeon.prepareMessageFromContent(from,{ "orderMessage": { "itemCount": 111119999, "message": teks, "footerText": "*Abhilash*", "thumbnail": bgg, "surface": 'CATALOG' }}, {quoted:ftrol})
              xeon.relayWAMessage(res)
         }
 const fakewa = (teks) => {        
@@ -2271,7 +2274,7 @@ sendButMessage(from, menu, ` 𝐃𝐨𝐠𝐞 𝐁𝐨𝐭`, [
           },]);
 break
 case 'makermenu':
-menu = `シ︎𝘔𝘢𝘬𝘦𝘳 𝘔𝘦𝘯??シ︎
+menu = `シ︎𝘔𝘢𝘬𝘦𝘳 𝘔??𝘯??シ︎
 ㋛${prefix}𝙨??𝙞𝙘??𝙚𝙧
 
 ㋛${prefix}𝙨𝙬𝙢 <𝙖𝙪𝙩𝙝𝙤𝙧|𝙥𝙖𝙘𝙠𝙣𝙖𝙢𝙚>

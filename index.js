@@ -110,7 +110,7 @@ const time2 = moment().tz("Asia/kolkata").format("HH:mm:ss");
     if (time2 < "15:00:00") {
       var ucapanWaktu = "Good afternoon☀️";
     }
-    if (time2 < "09:00:00") {
+    if (time2 < "06:00:00") {
       var ucapanWaktu = "Good morning🌅";
     }
     if (time2 < "03:00:00") {

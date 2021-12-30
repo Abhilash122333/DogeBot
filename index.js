@@ -113,7 +113,7 @@ const time2 = moment().tz("Asia/India").format("HH:mm:ss");
     if (time2 < "05:00:00") {
       var ucapanWaktu = "Good morning🌅";
     }
-    if (time2 < "09:00:00") {
+    if (time2 < "22:00:00") {
       var ucapanWaktu = "Good night🌃";
     }
  // BATAS \\
